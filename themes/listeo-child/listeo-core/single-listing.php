@@ -286,7 +286,7 @@ else: ?>
 										<?php
 									}	
 								?>
-								<p> If this is your business <a href="<?php echo site_url(); ?>/claim-listing/">click here</a> to verify today.</p>
+								<!-- <p> If this is your business <a href="<?php echo site_url(); ?>/claim-listing/">click here</a> to verify today.</p> -->
 								<?php
 									if(get_option('listeo_claim_page_button')){
 
