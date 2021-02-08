@@ -1980,3 +1980,15 @@ button#get-quote-btn:hover {
 	.message-bubble.me .message-text {border-radius: 4px;}
 	.unverify_listing_btn.new-list-btn a#unverify_listing_msg_btn {font-size: 15px !important; padding: 10px 20px !important;}	
 }
+/* 08/02/2021 */
+/* For review point */
+@media only screen and (max-width: 991px) {
+.desktop-listing-review {
+    display: none !important;
+}
+}
+@media only screen and (min-width: 990px) {
+div#codewidget-2 {
+    display: none !important;
+	}}
+/* end */
