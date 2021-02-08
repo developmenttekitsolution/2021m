@@ -102,12 +102,12 @@
                } ?>
             <!-- <?php //if(get_the_listing_address()) { ?><span><?php //the_listing_address(); ?></span><?php //} ?> -->
             <h3 class="listeo_single_list_title listo-hed-h3-new <?php echo (isset($rating) && $rating > 0)?"":"full_width";?>">
-              <a target="_blank" href="<?php the_permalink(); ?>">
+              <a  href="<?php the_permalink(); ?>">
                 <?php the_title(); ?> <?php if( get_post_meta($post->ID,'_verified',true ) == 'on') : ?><i class="verified-icon"></i><?php endif; ?>
               </a></h3>
 
             <p class="single_listing_description">
-              <a target="_blank" href="<?php the_permalink(); ?>" style="color: #707070;">
+              <a  href="<?php the_permalink(); ?>" style="color: #707070;">
                <?php 
                   $content = get_the_content();
                   $content = strip_tags($content);
@@ -135,7 +135,7 @@
          <?php } ?>
          <div class="listing-small-badge pricing-badge listo-new-badge">
             <!--<i class="fa fa-<?php echo esc_attr(get_option('listeo_price_filter_icon','tag')); ?>"></i>-->
-            <a style="color: #000;" target="_blank" href="<?php the_permalink(); ?>">
+            <a style="color: #000;" href="<?php the_permalink(); ?>">
             <?php 
                echo __('From ', 'listeo_core').' '.$cristian_min_price;
                // echo get_the_listing_regular_price();
