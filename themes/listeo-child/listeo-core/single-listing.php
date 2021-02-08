@@ -20,6 +20,7 @@ if($count_gallery < 4 ){
 }
 if( get_post_meta( $post->ID, '_gallery_style', true ) == 'top' && $count_gallery == 1 ) {
 	$gallery_style = 'none';	
+	
 }
 
 if ( have_posts() ) :
@@ -31,6 +32,7 @@ else: ?>
 <!-- Gradient-->
 <div class="single-listing-page-titlebar"></div>
 <?php endif; ?>
+
 <?php 
 
 
