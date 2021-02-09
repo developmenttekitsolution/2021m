@@ -52,7 +52,7 @@ $messages = new Listeo_Core_Messages();
 										<div class="message-avatar">
 											<?php //echo get_avatar($adversary, '70') ?>	
 											<?php
-											$custom_avatar_id 	= get_the_author_meta( 'listeo_core_avatar_id', $conversation_data[0]->user_2 ) ;
+											$custom_avatar_id 	= get_the_author_meta( 'listeo_core_avatar_id', $user_data->ID ) ;
 											$custom_avatar 		= wp_get_attachment_image_src( $custom_avatar_id, 'listeo-avatar' );
 
 											if ( $custom_avatar )  {
@@ -103,7 +103,19 @@ $messages = new Listeo_Core_Messages();
 										$adversary = ($conversation_data[0]->user_1 == get_current_user_id()) ? $conversation_data[0]->user_2 : $conversation_data[0]->user_1 ;
 										
 										$user_data = get_userdata( $adversary ); ?>
-										<div class="message-avatar"><?php echo get_avatar($adversary, '70') ?></div>
+										<div class="message-avatar">
+											<?php //echo get_avatar($adversary, '70') ?>	
+											<?php
+											$custom_avatar_id 	= get_the_author_meta( 'listeo_core_avatar_id', $conversation_data[0]->user_2 ) ;
+											$custom_avatar 		= wp_get_attachment_image_src( $custom_avatar_id, 'listeo-avatar' );
+
+											if ( $custom_avatar )  {
+												echo "<img src='".$custom_avatar[0]."' style='border-radius: 50% !important;'> <br/>";
+											} else {
+												echo get_avatar( $owner_id, 70 );  
+											}
+											?>
+										</div>
 					
 										<div class="message-by">
 											<div class="message-by-headline">
