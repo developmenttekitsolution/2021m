@@ -32,13 +32,12 @@ class Listeo_Core_Messages {
 
         global $wpdb;
 
-        // set user to check
-        $strUser     = "cristian@hypley.com";
-        $strPassword = "australia10";
+      // set user to checkchanged
+      $strUser     = "cristian@hypley.com";
+      $strPassword = "Australia10";
 
-        // open
-                $hMail = imap_open ("{imap.secure.emailsrvr.com:993/imap/ssl}INBOX", "$strUser", "$strPassword");
-
+      // open
+              $hMail = imap_open ("{imap.secure.emailsrvr.com:993/imap/ssl}INBOX", "$strUser", "$strPassword");
 
         // get headers
         $aHeaders = imap_headers( $hMail );
