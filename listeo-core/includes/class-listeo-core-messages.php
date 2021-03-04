@@ -460,6 +460,51 @@ class Listeo_Core_Messages {
         return true;
 		
     }
+	
+	public static function send( $emailto, $subject, $body , $activation_link='', $reply_to=''){
+
+		$from_name 	= get_option('listeo_emails_name',get_bloginfo( 'name' ));
+		$from_email = get_option('listeo_emails_from_email', get_bloginfo( 'admin_email' ));
+		$headers 	= sprintf( "From: %s <%s>\r\n Content-type: text/html; charset=UTF-8\r\n", $from_name, $from_email );
+		if($reply_to != ''){
+			$headers .='Reply-To: '.$reply_to.' <cristian@hypley.com>';
+		}
+
+		if( empty($emailto) || empty( $subject) || empty($body) ){
+			return ;
+		}
+															   
+		$template_loader = new listeo_core_Template_Loader;
+		ob_start();
+
+			$template_loader->get_template_part( 'emails/header' ); ?>
+			<tr>
+				<td align="left" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0; padding-left: 25px; padding-right: 25px; padding-bottom: 28px; width: 87.5%; font-size: 16px; font-weight: 400; 
+				padding-top: 28px; 
+				color: #666;
+				font-family: sans-serif;" class="paragraph">
+				<?php 
+					echo $body;
+				?>
+				<?php
+					if($activation_link != '')
+					{
+						?>
+							<p> Your Account Activation Link : <a href="<?php echo $activation_link; ?>">here</a></p>
+							<p>If you are facing any problems with verifying link, try copying and pasting the below url to your browser</p>
+							<p><?php echo $activation_link; ?></p>
+						<?php 
+					}
+				?>
+				</td>
+			</tr>
+		<?php
+			$template_loader->get_template_part( 'emails/footer' ); 
+			$content = ob_get_clean();
+   
+		wp_mail( @$emailto, @$subject, @$content, $headers );
+
+	}
 
    /**
 	* Get user conversations
