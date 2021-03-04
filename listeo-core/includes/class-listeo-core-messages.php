@@ -421,6 +421,7 @@ class Listeo_Core_Messages {
     	$mess_arr['sender_id'] = get_current_user_id();
     	$mess_arr['message'] = $message;
         $mess_arr['attachement_id'] = $att_id;
+        $mess_arr['recipient'] = $_REQUEST['recipient'];
 
     	$id = $this->send_new_message($mess_arr);
         
@@ -432,10 +433,32 @@ class Listeo_Core_Messages {
             $result['message'] = __( 'Message couldn\'t be send' , 'listeo_core' );
         }
 
+		$this->reminder_new_message($mess_arr);
         $result = json_encode($result);
         echo $result;  
 	   
 	    die();
+    }
+	
+	
+	public  function reminder_new_message($args)  {
+
+        global $wpdb;
+        $now_temp_time = current_time('timestamp');        
+		$remind_receiver = get_userdata($args['recipient']);
+		$remind_sender = get_userdata($args['sender_id']);
+		
+		$subject = 'Reminder Of New Message';
+		$body = '<div>'.
+					'<b>'.$remind_sender->display_name.'</b> is waiting for your respons.<br/><br/><br/>'.
+					'New messages:<br/>'.
+					'<p style="color: blue">'.$args['message'].'</p><br/><br/><br/>'.
+					'<p> Or send a message to <b>'.$remind_sender->display_name.'<b> by replying to this email. </p>'.
+				'</div>';
+		$reply_to = $args['conversation_id'].'__'.$args['sender_id'];	
+		self::send( $remind_receiver->user_email, $subject, $body ,'', $reply_to);        
+        return true;
+		
     }
 
    /**
