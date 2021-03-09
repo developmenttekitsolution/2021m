@@ -912,7 +912,7 @@ class Listeo_Core_Booking_Widget extends Listeo_Core_Widget {
 						<!-- Panel Dropdown -->
 						<div class="col-lg-12">
 							<div class="panel-dropdown booking-services">
-								<a href="#"><?php esc_html_e('Select Option','listeo_core'); ?> <span class="services-counter">0</span></a>
+								<a href="#"><?php esc_html_e('Selection Options','listeo_core'); ?> <span class="services-counter">0</span></a>
 								<div class="panel-dropdown-content padding-reset">
 									<div class="panel-dropdown-scrollable">
 									
@@ -1023,8 +1023,7 @@ class Listeo_Core_Booking_Widget extends Listeo_Core_Widget {
 						<!-- Panel Dropdown -->
 						<div class="col-lg-12">
 							<div class="panel-dropdown booking-services">
-								<a href="#"><?php esc_html_e('Select Option
-								','listeo_core'); ?> <span class="services-counter">0</span></a>
+								<a href="#"><?php esc_html_e('Selection Options','listeo_core'); ?> <span class="services-counter">0</span></a>
 								<div class="panel-dropdown-content padding-reset">
 									<div class="panel-dropdown-scrollable">
 									
@@ -1459,8 +1458,7 @@ class Listeo_Core_Owner_Widget extends Listeo_Core_Widget {
 
 							if ( $custom_avatar )  {
 								echo "<img src='".$custom_avatar[0]."' style='width: 100px; height : auto;'> <br/>";
-							} else {
-									//3905
+							} else {		
 //								echo get_avatar( $owner_id, 56 );  
 							}
 							?>
@@ -1469,12 +1467,10 @@ class Listeo_Core_Owner_Widget extends Listeo_Core_Widget {
 					<div class="listeo_list_provider_name new-list-provider-name"> 
 						<a href="<?php echo esc_url(get_author_posts_url( $owner_id )); ?>">
 							<h4><?php echo $owner_data->first_name; ?> <?php echo $owner_data->last_name; ?></h4>
-						//3905
 						<?php if(empty($owner_data->first_name) && empty($owner_data->last_name)){ ?>
                             <h4><?php echo $owner_data->display_name ?></h4>
                             <?php } ?>
 						</a>
-						//3905
 						<?php 
 							$total_visitor_reviews_args = array(
 								'post_author' 	=> $owner_id,

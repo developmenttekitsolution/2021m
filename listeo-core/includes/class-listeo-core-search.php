@@ -586,7 +586,7 @@ global $wpdb;
 
 public function ajax_get_listings() {
 
-
+		
 		global $wp_post_types;
 
 		$template_loader = new Listeo_Core_Template_Loader;
@@ -640,7 +640,7 @@ public function ajax_get_listings() {
 			'tax-region'    		=> $region,
 			'tax-listing_feature'   => $feature,
 			'tax-listing_category'  => $category,
-
+			// 'limit'					=> 2,
 		);
 		
 		$query_args['listeo_orderby'] = (isset($_REQUEST['listeo_core_order'])) ? sanitize_text_field( $_REQUEST['listeo_core_order'] ) : false;
@@ -776,7 +776,7 @@ public function ajax_get_listings() {
 		$result['pagination'] = arlisteo_core_ajax_pagination( $verifylistings->max_num_pages,$unverifylistings->max_num_pages, absint( $_REQUEST['page'] ) );
 	
 		wp_send_json($result);
-		
+		wp_die();
 	}
 
 	public function ajax_get_features_from_category(){
