@@ -1140,8 +1140,8 @@ body .listeo_msg_inbox ul li a {
 
 .listeo_msg_avatar img {
 	display: inline-block;
-	width: 54px;
-	height: 54px;
+	width: 40px;
+	height: 40px;
 	border-radius: 50%;
 }
 
@@ -1167,7 +1167,7 @@ body .listeo_msg_inbox ul li a {
 }
 
 .listeo_msg_inbox .listeo_msg_by {
-	margin-left: 85px;
+	margin-left: 65px;
 	font-size: 15px;
 	color: #666;
 }
@@ -1508,4 +1508,28 @@ body .listeo_msg_inbox ul li a {
     font-size: 15px;
     color: #333;
 }
+
+ul.pagination {
+    list-style: none;
+    padding-top: 10px;
+    display: block;
+}
+ul.pagination li {
+    display: inline-block;
+}
+
+ul.pagination li a {
+    padding: 10px 14px;
+    background: #30DA22;
+    margin-right: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+}
+ul.pagination li.active a {
+    cursor: not-allowed;
+    background: #fff;
+    color: #30da22;
+}
+
 /*End display conversation in admin */

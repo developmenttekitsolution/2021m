@@ -981,11 +981,12 @@ class Listeo_Core_Messages {
 		ob_start();
 		$template_loader = new Listeo_Core_Template_Loader;
         if( isset( $_GET["action"]) && $_GET["action"] == 'view' )  {
+			//echo 'bfndgnfgn';
             $template_loader->set_template_data( 
                 array( 
                     'ids' => $this->get_conversations($user_id) 
                 )
-            ) -> get_template_part( 'account/single_message' ); 
+            ) -> get_template_part( 'account/single_message_new' ); 
         } else {
             if( isset( $_GET["action"]) && $_GET["action"] == 'delete' )  {
                 if(isset( $_GET["conv_id"]) && !empty($_GET["conv_id"])) {
@@ -1000,12 +1001,13 @@ class Listeo_Core_Messages {
             }
             $total = count($this->get_conversations($user_id));
             $max_number_pages = ceil($total/$limit);
+			
             $template_loader->set_template_data( 
                 array( 
                     'ids' => $this->get_conversations($user_id,$limit,$offset),
                     'total_pages' => $max_number_pages
                 ) 
-            ) -> get_template_part( 'account/messages' ); 
+            ) -> get_template_part( 'account/messages-list' ); 
         }
 
 		return ob_get_clean();
