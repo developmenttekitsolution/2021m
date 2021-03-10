@@ -2,8 +2,24 @@
 	if( !defined( 'ABSPATH' ) ) exit;
 	global $wpdb;
 	$messages = new Listeo_Core_Messages();
+	
+	if (isset($_GET['page_no'])) {
+		$pageno = $_GET['page_no'];
+	} else {
+		$pageno = 1;
+	}
+	$no_of_records_per_page = 15;
+	$offset = ($pageno-1) * $no_of_records_per_page; 
+	
+	
+	$rowcount = $wpdb->get_var( "SELECT COUNT(*) FROM `" .$wpdb->prefix."listeo_core_conversations`");
+	//$total_rows = mysqli_fetch_array($result)[0];
+	$total_pages = ceil($rowcount / $no_of_records_per_page);
 
-	$ids = $wpdb->get_results ( "SELECT * FROM `" .$wpdb->prefix."listeo_core_conversations` ORDER BY last_update DESC ");
+	//echo $rowcount.'=='.$total_pages;
+
+	$ids = $wpdb->get_results ( "SELECT * FROM `" .$wpdb->prefix."listeo_core_conversations` ORDER BY last_update DESC  LIMIT " .$offset." , " .$no_of_records_per_page);
+	//echo "SELECT * FROM `" .$wpdb->prefix."listeo_core_conversations` ORDER BY last_update DESC  LIMIT " .$offset." , " .$no_of_records_per_page
 
 	/*if($_SERVER['REMOTE_ADDR'] == "123.201.19.159")
 	{
@@ -37,12 +53,13 @@
 							$message_url = add_query_arg( array( 'action' => 'view',  'conv_id' => $conversation->id ),admin_url('admin.php')."?page=single-user-conversation");
 
 							$last_msg = $messages->get_last_message($conversation->id);
+							
 							$conversation_data = $messages->get_conversation($conversation->id);
 							$referral = $messages->get_conversation_referral($conversation->referral);
 							$if_read  = $messages->check_if_read($conversation_data);	
 							/*echo "<pre>";
 								print_r($last_msg);
-							die;*/
+							echo "</pre>";*/
 							if($last_msg[0]->is_offer_message == 0)
 							{
 								?>
@@ -75,7 +92,7 @@
 															<?php echo esc_html($name." & ".$name2); ?>
 														</h5>
 													</div>
-													<div class="listeo_msg_avatar"><?php echo get_avatar($adversary1, '70') ?></div>
+													<div class="listeo_msg_avatar"><?php echo get_avatar($adversary1, '40') ?></div>
 													
 													<div class="listeo_msg_by">
 														<div class="listeo_msg_by_headline">
@@ -139,7 +156,7 @@
 														</h5>
 													</div>
 													
-													<div class="listeo_msg_avatar"><?php echo get_avatar($adversary1, '70') ?></div>
+													<div class="listeo_msg_avatar"><?php echo get_avatar($adversary1, '40') ?></div>
 													
 													<div class="listeo_msg_by">
 														<div class="listeo_msg_by_headline">
@@ -176,5 +193,41 @@
 				</ul>
 			</div>
 		</div>
+	<ul class="pagination">	
+<?php 
+$second_last = $total_pages - 1; 
+$page_no = $pageno;
+$adjacents = 2;
+if($page_no <= 4) { 
+ for ($counter = 1; $counter < 8; $counter++){ 
+ if ($counter == $page_no) {
+    echo "<li class='active'><a>$counter</a></li>"; 
+ }else{
+           echo "<li><a href='?page=user-conversation&page_no=$counter'>$counter</a></li>";
+                }
+}
+echo "<li><a>...</a></li>";
+echo "<li><a href='?page=user-conversation&page_no=$second_last'>$second_last</a></li>";
+echo "<li><a href='?page=user-conversation&page_no=$total_pages'>$total_pages</a></li>";
+}elseif($page_no > 4 && $page_no < $total_pages - 4) { 
+echo "<li><a href='?page=user-conversation&page_no=1'>1</a></li>";
+echo "<li><a href='?page=user-conversation&page_no=2'>2</a></li>";
+echo "<li><a>...</a></li>";
+for (
+     $counter = $page_no - $adjacents;
+     $counter <= $page_no + $adjacents;
+     $counter++
+     ) { 
+     if ($counter == $page_no) {
+ echo "<li class='active'><a>$counter</a></li>"; 
+ }else{
+        echo "<li><a href='?page=user-conversation&page_no=$counter'>$counter</a></li>";
+          }                  
+       }
+echo "<li><a>...</a></li>";
+echo "<li><a href='?page=user-conversation&page_no=$second_last'>$second_last</a></li>";
+echo "<li><a href='?page=user-conversation&page_no=$total_pages'>$total_pages</a></li>";
+}?>
+</ul>
 	</div>
 </div>
