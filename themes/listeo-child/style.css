@@ -1960,3 +1960,6 @@ div#titlebar .listing-titlebar-title h2 {
 div#titlebar .listing-titlebar-title h2 span.listing-tag{
 	display:none !important;
 }
+
+.listeo_grid_view_item .listing-item-content.listo-new-listing-iteam { padding-top: 14px;
+}
