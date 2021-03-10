@@ -1,12 +1,20 @@
 <?php 	
-
+// die;
 if(has_post_thumbnail()){ 
-	the_post_thumbnail('listeo-listing-grid'); 
-} 
+	// the_post_thumbnail('listeo-listing-grid'); 
+	global $post;
+	$image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'single-post-thumbnail' );
+	// echo $image[0];
+	echo '<div class="listeo_cat_page_silder listeo_liting_single_tttt" data-tttt="test">';
+		echo '<a target="_blank" href="'.get_permalink( $id ).'"><img data-url="'.esc_url(get_post_permalink($id)).'" class="listeo_liting_single_galary_image" src="'.$image[0].'" alt=""></a>';
+		echo '<a target="_blank" href="'.get_permalink( $id ).'"><img data-url="'.esc_url(get_post_permalink($id)).'" class="listeo_liting_single_galary_image" src="'.$image[0].'" alt=""></a>';
+		echo '<a target="_blank" href="'.get_permalink( $id ).'"><img data-url="'.esc_url(get_post_permalink($id)).'" class="listeo_liting_single_galary_image" src="'.$image[0].'" alt=""></a>';
+	echo '</div>';
+}  
 else { 	
 	$gallery = (array) get_post_meta( $id, '_gallery', true );
 	$count_gallery = listeo_count_gallery_items($id);
-
+// echo $count_gallery;
 	if($count_gallery < 2) {
 		$ids = array_keys($gallery);
 		if(!empty($ids[0]) && $ids[0] !== 0){ 
