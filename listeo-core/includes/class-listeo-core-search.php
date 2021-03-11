@@ -1351,6 +1351,7 @@ public function ajax_get_listings() {
 		
 		ob_start();	
 		if($wrap_with_form == 'yes') { ?>
+		<p class="ajax-search-msg"></p>
 		<form action="<?php echo $action; ?>" id="listeo_core-search-form" class="t1 <?php if($dynamic_filters == 'on') { echo esc_attr('dynamic'); }  ?> <?php echo esc_attr($custom_class) ?> <?php echo esc_attr($ajax) ?>" method="GET">
 		<?php } 
 		if( in_array($source, array('home')) ) { ?>

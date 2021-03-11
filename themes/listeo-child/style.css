@@ -1936,7 +1936,7 @@ button#get-quote-btn:hover {
     font-size: 26px !important;
     font-weight: 600 !important;
     cursor: pointer;
-    border-radius: 12px !important;
+    border-radius: 12px !important;0
     border-color: white !important;
     padding: 20px !important;
       text-align: centre;
@@ -1959,7 +1959,9 @@ div#titlebar .listing-titlebar-title h2 {
 
 div#titlebar .listing-titlebar-title h2 span.listing-tag{
 	display:none !important;
-}
+} 
 
-.listeo_grid_view_item .listing-item-content.listo-new-listing-iteam { padding-top: 14px;
+p.ajax-search-msg {
+    text-align: center;
+    color: red;
 }
