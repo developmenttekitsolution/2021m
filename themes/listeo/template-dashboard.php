@@ -69,16 +69,25 @@ if ( isset( $_REQUEST['register-errors'] ) ) {
 			     $errors[] = esc_html__( "Please accept the Privacy Policy to register account.", 'listeo' );
 			     break;
 			case 'first_name':
-			     $errors[] = esc_html__( "Please provide your first name", 'listeo' );
+			     $errors[] = esc_html__( "Please provide your first name.", 'listeo' );
 			     break;
 			case 'last_name':
-			     $errors[] = esc_html__( "Please provide your last name", 'listeo' );
+			     $errors[] = esc_html__( "Please provide your last name.", 'listeo' );
 			     break;
 			case 'empty_user_login':
-			     $errors[] = esc_html__( "Please provide your user login", 'listeo' );
+			     $errors[] = esc_html__( "Please provide your user login.", 'listeo' );
+			     break;
+			case 'empty_username':
+			     $errors[] = esc_html__( "Please provide your username.", 'listeo' );
+			     break;
+			case 'username_exists':
+			     $errors[] = esc_html__( "This username already exists. Please provide new one", 'listeo' );
 			     break;
 	 		case 'password-no':
 			     $errors[] = esc_html__( "You have forgot about password.", 'listeo_core', 'listeo' );
+			     break;
+	 		case 'password-weak':
+			     $errors[] = esc_html__( "You password is too weak. At least it will 6 characters long.", 'listeo_core', 'listeo' );
 			     break;
 	        case 'incorrect_password':
 	            $err = __(

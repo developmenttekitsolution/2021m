@@ -22,6 +22,7 @@ class Listeo_Core_Users {
 	 * @access  public
 	 * @since   1.0.0
 	 */
+	 
 	public $assets_dir;
 
 	/**
@@ -30,10 +31,13 @@ class Listeo_Core_Users {
 	 * @access  public
 	 * @since   1.0.0
 	 */
+	 
 	public $dir;
+	
 	/**
 	 * Constructor
 	 */
+	 
 	public function __construct() {
 
 		//$this->assets_dir = trailingslashit( $this->dir ) . 'assets';
@@ -67,8 +71,6 @@ class Listeo_Core_Users {
 		
 
 		add_shortcode( 'listeo_my_orders', array( $this, 'my_orders' ) );
-
-
 		
 
 		$front_login = get_option('listeo_front_end_login' );
@@ -180,9 +182,122 @@ class Listeo_Core_Users {
 	 }
 
 	function show_login_form(){
-		
+			//echo 'vfsbdbd';
+			//print_r($_POST);
+			global $post;
+			$pagelink = get_permalink($post->ID);
+			if(!empty($_POST)){
+				if(isset($_GET['action_new'])){
+					if($_GET['action_new'] == 'register'){
+						
+						$username = sanitize_user( $_POST['username'] );
+						$email = sanitize_user( $_POST['email'] );
+						$first_name = sanitize_user( $_POST['first_name'] );
+						$last_name = sanitize_user( $_POST['last_name'] );
+						$password = sanitize_user( $_POST['password'] );
+						$privacy_policy = sanitize_user( $_POST['privacy_policy'] );
+						$role = sanitize_user( $_POST['user_role'] );						
+						
+						if(empty($username)){
+
+							wp_redirect( $pagelink.'?register-errors=empty_username');
+							exit;
+								
+						}elseif(!empty($username)){
+							
+							if(username_exists( $username )){
+								wp_redirect( $pagelink.'?register-errors=username_exists');
+								exit;
+							}
+							
+						}
+						
+						if(empty($password)){
+							
+							wp_redirect( $pagelink.'?register-errors=password-no');
+							exit;
+							
+						}elseif(!empty($password)){
+							
+							if(strlen($password) < 6){
+								wp_redirect( $pagelink.'?register-errors=password-weak');
+								exit;
+							}
+							
+						}
+						
+						if(empty($first_name)){
+							
+							wp_redirect( $pagelink.'?register-errors=first_name');
+							exit;
+							
+						}
+						if(empty($last_name)){
+							
+							wp_redirect( $pagelink.'?register-errors=last_name');
+							exit;
+							
+						}
+						
+						if(empty($email)){
+							
+							wp_redirect( $pagelink.'?register-errors=email');
+							exit;
+							
+						}elseif(!empty($email)){
+							
+							if(email_exists($email)){
+								wp_redirect( $pagelink.'?register-errors=email_exists');
+								exit;
+							}
+						}
+						
+						if(empty($privacy_policy)){
+							
+							wp_redirect( $pagelink.'?register-errors=policy-fail');
+							exit;
+							
+						}
+						
+						$userdata = array(
+							'user_login'    =>   $username,
+							'user_email'    =>   $email,
+							'user_pass'     =>   $password,
+							'first_name'    =>   $first_name,
+							'last_name'     =>   $last_name,
+							'role'			=>   $role
+						);
+						$user_id = wp_insert_user( $userdata );
+						
+						if ( ! is_wp_error( $user ) ) {
+							$code = sha1( $user_id . time() );
+							
+							global $wpdb;
+							$user_table_name = $wpdb->prefix . 'users';
+							$wpdb->update(
+								$user_table_name,
+									array( 'user_activation_key' => $code),
+									array( 'ID' => $user_id ),
+									array( '%s')
+								);
+							
+							update_user_meta($user_id, 'account_activated', 0);
+							update_user_meta($user_id, 'activation_code', $code);	
+							wp_new_user_notification( $user_id, $password,'both',$code );
+							if(get_option('listeo_autologin')){
+								wp_set_current_user($user_id); // set the current wp user
+								wp_set_auth_cookie($user_id); 	
+							}
+							
+						}
+						
+						wp_redirect( $pagelink.'?registered=done');
+						exit;
+					}
+				}
+			}
 			$template_loader = new Listeo_Core_Template_Loader;
-			$template_loader->get_template_part( 'account/login-form' ); 
+			$template_loader->get_template_part( 'account/login-form-new' ); 
 	}
 	function enqueue_scripts(){
 		if (!is_user_logged_in()) {
@@ -997,12 +1112,12 @@ class Listeo_Core_Users {
 
 	}
 
-	public function my_account( $atts = array() ) {
+	public function my_account( $atts = array() ) {   
 		$template_loader = new Listeo_Core_Template_Loader;
 		ob_start();
 		if ( is_user_logged_in() ) : 
 		$template_loader->get_template_part( 'my-account' ); 
-		else :
+		else : //echo 'zdvsfbdf';die(); 
 		$template_loader->get_template_part( 'account/login' ); 
 		endif;
 		return ob_get_clean();
