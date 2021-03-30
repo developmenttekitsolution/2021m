@@ -29,15 +29,17 @@ class Listeo_Core_Messages {
     public function check_messages_from_email() {
         //run remind work every 5 mins
         do_action('listeo_mail_unread_6hour');
+        //do_action('listeo_mail_unread_10_minutes');
 
         global $wpdb;
 
-      // set user to checkchanged
-      $strUser     = "cristian@hypley.com";
-      $strPassword = "Australia10";
+        // set user to check
+        $strUser     = "cristian@hypley.com";
+        $strPassword = "Australia10";
 
-      // open
-              $hMail = imap_open ("{imap.secure.emailsrvr.com:993/imap/ssl}INBOX", "$strUser", "$strPassword");
+        // open
+                $hMail = imap_open ("{secure.emailsrvr.com:993/imap/ssl}INBOX", "$strUser", "$strPassword");
+
 
         // get headers
         $aHeaders = imap_headers( $hMail );
@@ -132,6 +134,7 @@ class Listeo_Core_Messages {
      * Maintenance task to expire listings.
      */
     public function check_for_new_messages() {
+		
         global $wpdb;
         $date_format = get_option('date_format');
 
@@ -149,7 +152,7 @@ class Listeo_Core_Messages {
         // return $result;
 
         // Notifie expiring in 5 days
-       $conversation_ids = $wpdb->get_col( $wpdb->prepare( "
+        $conversation_ids = $wpdb->get_col( $wpdb->prepare( "
                 SELECT id FROM {$wpdb->prefix}listeo_core_conversations
                 WHERE (read_user_1 = '0'
                 OR read_user_2 = '0' )
@@ -210,6 +213,73 @@ class Listeo_Core_Messages {
 
         return $id;
     }
+	
+	
+	public  function reminder_new_message($args)  {
+
+        global $wpdb;
+        $now_temp_time = current_time('timestamp');        
+		$remind_receiver = get_userdata($args['recipient']);
+		$remind_sender = get_userdata($args['sender_id']);
+		
+		$subject = 'Reminder Of New Message';
+		$body = '<div>'.
+					'<b>'.$remind_sender->display_name.'</b> is waiting for your respons.<br/><br/><br/>'.
+					'New messages:<br/>'.
+					'<p style="color: blue">'.$args['message'].'</p><br/><br/><br/>'.
+					'<p> Or send a message to <b>'.$remind_sender->display_name.'<b> by replying to this email. </p>'.
+				'</div>';
+		$reply_to = $args['conversation_id'].'__'.$args['sender_id'];	
+		self::send( $remind_receiver->user_email, $subject, $body ,'', $reply_to);        
+        return true;
+		
+    }
+	
+	public static function send( $emailto, $subject, $body , $activation_link='', $reply_to=''){
+
+		$from_name 	= get_option('listeo_emails_name',get_bloginfo( 'name' ));
+		$from_email = get_option('listeo_emails_from_email', get_bloginfo( 'admin_email' ));
+		$headers 	= sprintf( "From: %s <%s>\r\n Content-type: text/html; charset=UTF-8\r\n", $from_name, $from_email );
+		if($reply_to != ''){
+			$headers .='Reply-To: '.$reply_to.' <cristian@hypley.com>';
+		}
+
+		if( empty($emailto) || empty( $subject) || empty($body) ){
+			return ;
+		}
+															   
+		$template_loader = new listeo_core_Template_Loader;
+		ob_start();
+
+			$template_loader->get_template_part( 'emails/header' ); ?>
+			<tr>
+				<td align="left" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0; padding-left: 25px; padding-right: 25px; padding-bottom: 28px; width: 87.5%; font-size: 16px; font-weight: 400; 
+				padding-top: 28px; 
+				color: #666;
+				font-family: sans-serif;" class="paragraph">
+				<?php 
+					echo $body;
+				?>
+				<?php
+					if($activation_link != '')
+					{
+						?>
+							<p> Your Account Activation Link : <a href="<?php echo $activation_link; ?>">here</a></p>
+							<p>If you are facing any problems with verifying link, try copying and pasting the below url to your browser</p>
+							<p><?php echo $activation_link; ?></p>
+						<?php 
+					}
+				?>
+				</td>
+			</tr>
+		<?php
+			$template_loader->get_template_part( 'emails/footer' ); 
+			$content = ob_get_clean();
+   
+		wp_mail( @$emailto, @$subject, @$content, $headers );
+
+	}
+	
 
     public  function send_new_message( $args = 0 )  {
         require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
@@ -302,6 +372,7 @@ class Listeo_Core_Messages {
             $mess_arr['sender_id'] = get_current_user_id();
             $mess_arr['message'] = $message;
             $mess_arr['attachement_id'] = $att_id;
+            $mess_arr['recipient'] = $_REQUEST['recipient'];
             $id = $this->send_new_message($mess_arr);
         }
         
@@ -314,6 +385,9 @@ class Listeo_Core_Messages {
         }
 
         $result = json_encode($result);
+		//do_action('listeo_mail_to_user_new_message',$conversation_id);
+		$this->reminder_new_message($mess_arr);
+		
         echo $result;      
         die();
     }
@@ -399,7 +473,9 @@ class Listeo_Core_Messages {
     	$message = $_REQUEST['message'];
 
         $att_id = $this->add_images();
-      
+        
+        //do_action('listeo_mail_unread_10_minutes'); 
+		
         if(empty($message)){
             $result['type'] = 'error';
             $result['message'] = __( 'Empty message' , 'listeo_core' );
@@ -433,78 +509,14 @@ class Listeo_Core_Messages {
             $result['message'] = __( 'Message couldn\'t be send' , 'listeo_core' );
         }
 
-		$this->reminder_new_message($mess_arr);
         $result = json_encode($result);
+		
+		$this->reminder_new_message($mess_arr);
+		
         echo $result;  
 	   
 	    die();
     }
-	
-	
-	public  function reminder_new_message($args)  {
-
-        global $wpdb;
-        $now_temp_time = current_time('timestamp');        
-		$remind_receiver = get_userdata($args['recipient']);
-		$remind_sender = get_userdata($args['sender_id']);
-		
-		$subject = 'Reminder Of New Message';
-		$body = '<div>'.
-					'<b>'.$remind_sender->display_name.'</b> is waiting for your respons.<br/><br/><br/>'.
-					'New messages:<br/>'.
-					'<p style="color: blue">'.$args['message'].'</p><br/><br/><br/>'.
-					'<p> Or send a message to <b>'.$remind_sender->display_name.'<b> by replying to this email. </p>'.
-				'</div>';
-		$reply_to = $args['conversation_id'].'__'.$args['sender_id'];	
-		self::send( $remind_receiver->user_email, $subject, $body ,'', $reply_to);        
-        return true;
-		
-    }
-	
-	public static function send( $emailto, $subject, $body , $activation_link='', $reply_to=''){
-
-		$from_name 	= get_option('listeo_emails_name',get_bloginfo( 'name' ));
-		$from_email = get_option('listeo_emails_from_email', get_bloginfo( 'admin_email' ));
-		$headers 	= sprintf( "From: %s <%s>\r\n Content-type: text/html; charset=UTF-8\r\n", $from_name, $from_email );
-		if($reply_to != ''){
-			$headers .='Reply-To: '.$reply_to.' <cristian@hypley.com>';
-		}
-
-		if( empty($emailto) || empty( $subject) || empty($body) ){
-			return ;
-		}
-															   
-		$template_loader = new listeo_core_Template_Loader;
-		ob_start();
-
-			$template_loader->get_template_part( 'emails/header' ); ?>
-			<tr>
-				<td align="left" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0; padding-left: 25px; padding-right: 25px; padding-bottom: 28px; width: 87.5%; font-size: 16px; font-weight: 400; 
-				padding-top: 28px; 
-				color: #666;
-				font-family: sans-serif;" class="paragraph">
-				<?php 
-					echo $body;
-				?>
-				<?php
-					if($activation_link != '')
-					{
-						?>
-							<p> Your Account Activation Link : <a href="<?php echo $activation_link; ?>">here</a></p>
-							<p>If you are facing any problems with verifying link, try copying and pasting the below url to your browser</p>
-							<p><?php echo $activation_link; ?></p>
-						<?php 
-					}
-				?>
-				</td>
-			</tr>
-		<?php
-			$template_loader->get_template_part( 'emails/footer' ); 
-			$content = ob_get_clean();
-   
-		wp_mail( @$emailto, @$subject, @$content, $headers );
-
-	}
 
    /**
 	* Get user conversations

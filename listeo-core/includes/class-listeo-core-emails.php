@@ -40,6 +40,7 @@ class Listeo_Core_Emails {
 		add_action( 'pending_payment_to_publish', array( $this, 'published_listing_email' ) );
 		add_action( 'preview_to_publish', array( $this, 'published_listing_email' ) );
 		add_action( 'listeo_mail_unread_6hour', array( $this, 'remind_after_6_hours' ) );
+		//add_action( 'listeo_mail_unread_10_minutes', array( $this, 'remind_after_10_minutes' ) );
 		
 		// add_action( 'draft_to_publish', array( $this, 'published_listing_email' ) );
 		// add_action( 'auto-draft_to_publish', array( $this, 'published_listing_email' ) );
@@ -681,6 +682,10 @@ class Listeo_Core_Emails {
     *
     *
     */
+	
+	
+	
+	
     public  function remind_after_6_hours()  {
 
         global $wpdb;
