@@ -1871,6 +1871,7 @@ button#get-quote-btn:hover {
 	background-color: #f76a6f;
 }
 
+
 /*responsive-design*/
 
 @media screen and (min-width:768px) and (max-width:900px){
@@ -1935,7 +1936,7 @@ button#get-quote-btn:hover {
     font-size: 26px !important;
     font-weight: 600 !important;
     cursor: pointer;
-    border-radius: 12px !important;
+    border-radius: 12px !important;0
     border-color: white !important;
     padding: 20px !important;
       text-align: centre;
@@ -1950,45 +1951,17 @@ button#get-quote-btn:hover {
   }
 }
 
-/*3905 task number*/
-.message-bubbles .message-bubble.me .message-text {
-    background-color: #2ccc2d !important;
-    color: #fff !important;
-    border-radius: 4px 28px 28px 0;
+/* disable gap between title review */
+
+div#titlebar .listing-titlebar-title h2 {
+    line-height: 36px !important;
 }
-.message-bubbles .message-bubble.me .message-text::before {
-    color: #2ccc2d !important;
-    right: -8px;
+
+div#titlebar .listing-titlebar-title h2 span.listing-tag{
+	display:none !important;
+} 
+
+p.ajax-search-msg {
+    text-align: center;
+    color: red;
 }
-.message-bubble .message-text {
-    background: #eee !important;
-}
-.message-bubble .message-text::before {
-    color: #eee !important;
-}
-.message-bubble .message-text {
-    border-radius: 28px 40px 0 28px;
-}
-.message-bubble .message-text::before {
-	right: -9px;
-}
-.listing-item img {
-	height: 265px;
-}
-@media only screen and (max-width: 767px){
-	.message-bubble .message-text {border-radius: 4px;}
-	.message-bubble.me .message-text {border-radius: 4px;}
-	.unverify_listing_btn.new-list-btn a#unverify_listing_msg_btn {font-size: 15px !important; padding: 10px 20px !important;}	
-}
-/* 08/02/2021 */
-/* For review point */
-@media only screen and (max-width: 991px) {
-.desktop-listing-review {
-    display: none !important;
-}
-}
-@media only screen and (min-width: 990px) {
-div#codewidget-2 {
-    display: none !important;
-	}}
-/* end */
