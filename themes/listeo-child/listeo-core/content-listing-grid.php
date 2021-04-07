@@ -134,7 +134,7 @@
          <?php } ?>
          <?php } ?>
         <!-- // developer added starts here --> 
-         <span style=" font-size: 19px; position: absolute; z-index: 101111111111; text-align: center;right: 40px; bottom: -1px;cursor: normal;display: block;height: 36px; width: 34px; border-radius: 50%;transition: all 0.4s; color: #0bee0f;" ><a href="javascript:open_popup('<?php echo esc_attr($post->ID)?>','<?php echo $post->post_author ?>', '<?php echo esc_attr(get_the_ID()); ?>')" class="fa"  style="color: inherit;"> &#xf075;</a></span>
+         <span style=" font-size: 19px; position: absolute; z-index: 101111111111; text-align: center;right: 40px; bottom: -1px;cursor: normal;display: block;height: 36px; width: 34px; border-radius: 50%;transition: all 0.4s; color: #0bee0f;" ><a href="javascript:open_popup('<?php echo esc_attr($post->ID)?>','<?php echo $post->post_author ?>', '<?php echo esc_attr(get_the_ID()); ?>')" class="fa "  style="color: inherit;"> &#xf075;</a></span>
         <!-- // developer added end --> 
          <div class="listing-small-badge pricing-badge listo-new-badge">
             <!--<i class="fa fa-<?php echo esc_attr(get_option('listeo_price_filter_icon','tag')); ?>"></i>-->
