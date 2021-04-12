@@ -8,7 +8,8 @@
 <div class="tabs-container alt">
 
 	<!-- Login -->
-	<div class="tab-content" id="tab1" style="display: none;">
+	<!-- prachi removed style="display:none"  from tab1-->
+	<div class="tab-content" id="tab1">
 			<?php
 
 			/*WPEngine compatibility*/
@@ -55,7 +56,8 @@
 	</div>
 
 	<!-- Register -->
-	<div class="tab-content" id="tab2" style="display: none;">	
+	<!-- prachi removed style="display:none"  from tab2-->
+	<div class="tab-content" id="tab2">	
 		<?php
 		if ( !get_option('users_can_register') ) : ?>
 				<div class="notification error closeable" style="display: block">

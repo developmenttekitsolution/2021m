@@ -16,13 +16,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="profile" href="http://gmpg.org/xfn/11">
 <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
-<!-- prachi added jquery for fixing the jquery error that prevents the singin/signup box starts -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<!-- prachi added jquery for fixing the jquery error that prevents the singin/signup box  ends -->
-
-<?php wp_head(); ?>
-
-<!-- prachi added the script of popup box on top starts here -->
+<!-- prachi added the above js link and below js script code -->
+<?php  wp_head(); ?>
 <script>
 	
 
@@ -30,14 +26,20 @@ $(document).on('click','.sign_in_link', function(){
 
    	$('.sign_up_li').removeClass('active');
 	$('.sign_in_li').addClass('active');
-    $('.sign_in_li a').trigger('click');
+    // $('.sign_in_li a').trigger('click');
+    $('#tab2').css('display','none');
+    $('#tab1').css('display','inline-block');
+    
+    
 });
 
 $(document).on('click','.sign_up_link',function(){
 
    $('.sign_in_li').removeClass('active');
    $('.sign_up_li').addClass('active');
-   $('.sign_up_li a').trigger('click');
+   // $('.sign_up_li a').trigger('click');
+   $('#tab1').css('display','none');
+    $('#tab2').css('display','inline-block');
 });	
 	
 
