@@ -183,11 +183,15 @@ if( isset( $_GET["action"]) && $_GET["action"] == 'view' )  {
 												$custom_avatar_id 	= get_the_author_meta( 'listeo_core_avatar_id', $conversation_data[0]->user_2 ) ;
 												$custom_avatar 		= wp_get_attachment_image_src( $custom_avatar_id, 'listeo-avatar' );
 
-												if ( $custom_avatar )  {
+												// prachi changed the if loop with !empty check of custom avatar
+
+												if ( !empty($custom_avatar[0]) )  {
 													echo "<img src='".$custom_avatar[0]."' style='width: 44px;  border-radius: 50% !important;'> <br/>";
 												} else {
-													echo get_avatar( $owner_id, 70 );  
+													echo $get_avatar;  
 												}
+												// prachi added ends here
+												
 												?>
 											</a>
 										</div>

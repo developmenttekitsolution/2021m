@@ -16,8 +16,33 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="profile" href="http://gmpg.org/xfn/11">
 <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+<!-- prachi added jquery for fixing the jquery error that prevents the singin/signup box starts -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- prachi added jquery for fixing the jquery error that prevents the singin/signup box  ends -->
 
 <?php wp_head(); ?>
+
+<!-- prachi added the script of popup box on top starts here -->
+<script>
+	
+
+$(document).on('click','.sign_in_link', function(){
+
+   	$('.sign_up_li').removeClass('active');
+	$('.sign_in_li').addClass('active');
+    $('.sign_in_li a').trigger('click');
+});
+
+$(document).on('click','.sign_up_link',function(){
+
+   $('.sign_in_li').removeClass('active');
+   $('.sign_up_li').addClass('active');
+   $('.sign_up_li a').trigger('click');
+});	
+	
+
+</script>
+<!-- prachi added the script of popup box on top ends here -->
 </head>
 
 <body <?php body_class(); ?>>
@@ -271,19 +296,6 @@ jQuery( document ).ready(function() {
 	jQuery('.mofa.mofa-google').css("margin-top","5px");
 	jQuery('.mofa.mofa-facebook').css("margin-top","5px");
 });
-</script>
-<script>
-jQuery(document).on('click','.sign_in_link',function(){
-        jQuery('.sign_up_li').removeClass('active');
-		 jQuery('.sign_in_li').addClass('active');
-        jQuery('.sign_in_li a').trigger('click');
-	});
-
-jQuery(document).on('click','.sign_up_link',function(){
-        jQuery('.sign_in_li').removeClass('active');
-        jQuery('.sign_up_li').addClass('active');
-       jQuery('.sign_up_li a').trigger('click');
-});	
 </script>
 <script>
 jQuery(document).ready(function()
