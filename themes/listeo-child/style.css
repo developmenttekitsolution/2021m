@@ -1793,7 +1793,9 @@ div#listeo-listings-container .col-lg-4.col-md-6{
 }
 .messages-container-inner .message-content{
     overflow-y: scroll;
-    height: 450px;
+    /*height: 450px;*/
+     height: 800px;
+    /*prachi added the 800px */
 }
 .btn.btn-mo.btn-block.btn-social.btn-customtheme.btn-custom-dec.login-button{
     display: inline-block;
