@@ -50,7 +50,7 @@ get_header('split');?>
 						</div>
 					</div>
 			</section>
-			<!-- developer added code here starts -->
+			<!-- prachi added code here starts -->
 			 
 			    <div class="modal popup-overlay">
 			        
@@ -58,7 +58,7 @@ get_header('split');?>
 			         <div class="modal-header">
 			           <div class="modal-title"><?php esc_html_e('Send Message', 'listeo_core'); ?></div>
 			           <!-- <span class="close">X</span> -->
-                 <button title="Close (Esc)" type="button" class=" close mfp-close" style="color: #807171 !important;"></button>
+                 <button title="Close (Esc)" type="button" class=" close mfp-close msgvenderclose" style="color: #807171 !important;"></button>
 			          </div>
 			          <div class="modal-content">
 			              <?php if( is_user_logged_in() ) {
@@ -93,7 +93,7 @@ get_header('split');?>
 			       </div>
 			      
 			      </div>
-			<!-- developer added code here ends -->
+			<!-- prachi added code here ends -->
 		</div>
 	</div>
 	<div class="fs-inner-container map-fixed">
@@ -112,9 +112,9 @@ get_header('split');?>
 <div class="clearfix"></div>
 
 <?php get_footer('empty'); ?>
-<!-- developer added code here starts -->
+<!-- prachi added code here starts -->
 <style>
-.mfp-close{
+.msgvenderclose{
   top: -3px !important;
   right: 10px !important;
 
@@ -353,3 +353,4 @@ body.lorem {
         
   }
 </script>
+<!-- prachi added code here starts -->
