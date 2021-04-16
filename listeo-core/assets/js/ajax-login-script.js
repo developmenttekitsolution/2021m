@@ -117,7 +117,7 @@ $(document).ready(function(){
     // $('#sign-in-dialog form#register').on('submit', function(e){
     $('#register').on('submit', function(e){
     // prachi modified ends here
-
+ 
         $('form#register .notification').removeClass('error').addClass('notice').show().text(listeo_login.loadingmessage);
         $.ajax({
             type: 'POST',
