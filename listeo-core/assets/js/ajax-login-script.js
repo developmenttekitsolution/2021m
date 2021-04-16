@@ -113,7 +113,10 @@ $(document).ready(function(){
     });
 
     // Perform AJAX login on form submit
-    $('#sign-in-dialog form#register').on('submit', function(e){
+    // prachi modified starts here
+    // $('#sign-in-dialog form#register').on('submit', function(e){
+    $('#register').on('submit', function(e){
+    // prachi modified ends here
 
         $('form#register .notification').removeClass('error').addClass('notice').show().text(listeo_login.loadingmessage);
         $.ajax({
